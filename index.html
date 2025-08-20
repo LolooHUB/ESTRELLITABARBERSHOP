@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Estrellita Barbershop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>💈 Estrellita Barbershop</h1>
+    <p>Reserva tu turno online</p>
+  </header>
+
+  <main>
+    <form id="reservaForm">
+      <label>Nombre completo:</label>
+      <input type="text" id="nombre" required>
+
+      <label>Día y hora:</label>
+      <input type="datetime-local" id="fecha" required>
+
+      <label>Teléfono / Celular:</label>
+      <input type="tel" id="telefono" required>
+
+      <button type="submit">Reservar turno</button>
+    </form>
+    <p id="mensaje"></p>
+  </main>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
