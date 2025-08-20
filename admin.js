@@ -5,7 +5,7 @@ const listaTurnos = document.getElementById("listaTurnos");
 
 async function cargarTurnos() {
   listaTurnos.innerHTML = "";
-  const querySnapshot = await getDocs(collection(db, "turnos"));
+  const querySnapshot = await getDocs(collection(db, "Turnos")); // 👈 acá
   querySnapshot.forEach((turno) => {
     const datos = turno.data();
     const fila = document.createElement("tr");
@@ -24,7 +24,7 @@ async function cargarTurnos() {
   document.querySelectorAll(".aceptar").forEach(btn => {
     btn.addEventListener("click", async () => {
       const id = btn.getAttribute("data-id");
-      await updateDoc(doc(db, "turnos", id), { estado: "Aceptado" });
+      await updateDoc(doc(db, "Turnos", id), { estado: "Aceptado" }); // 👈 acá
       cargarTurnos();
     });
   });
