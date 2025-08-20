@@ -3,8 +3,7 @@ import { collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/fir
 
 const listaTurnos = document.getElementById("listaTurnos");
 const modal = document.getElementById("modal");
-const modalContent = document.getElementById("modalContent");
-let turnoActual = null;
+const turnoActual = { id: null, telefono: null };
 
 async function cargarTurnos() {
   listaTurnos.innerHTML = "";
@@ -12,61 +11,49 @@ async function cargarTurnos() {
   querySnapshot.forEach((turno) => {
     const datos = turno.data();
     const fila = document.createElement("tr");
-
     fila.innerHTML = `
       <td>${datos.nombre}</td>
-      <td>${new Date(datos.fecha).toLocaleString()}</td>
+      <td>${datos.fecha}</td>
+      <td>${datos.hora}</td>
       <td>${datos.telefono}</td>
       <td>${datos.estado}</td>
       <td><button class="acciones" data-id="${turno.id}" data-telefono="${datos.telefono}">Acciones</button></td>
     `;
-
     listaTurnos.appendChild(fila);
   });
 
   document.querySelectorAll(".acciones").forEach(btn => {
     btn.addEventListener("click", () => {
-      turnoActual = {
-        id: btn.getAttribute("data-id"),
-        telefono: btn.getAttribute("data-telefono")
-      };
-      abrirModal();
+      turnoActual.id = btn.dataset.id;
+      turnoActual.telefono = btn.dataset.telefono;
+      modal.style.display = "flex";
     });
   });
 }
 
-function abrirModal() {
-  modal.style.display = "flex";
-}
+// Cerrar modal
+document.getElementById("cerrarModal").addEventListener("click", () => modal.style.display="none");
 
-function cerrarModal() {
-  modal.style.display = "none";
-}
-
-document.getElementById("cerrarModal").addEventListener("click", cerrarModal);
-
-// 📞 Contactar cliente por WhatsApp
+// WhatsApp
 document.getElementById("whatsappBtn").addEventListener("click", () => {
-  if (turnoActual) {
-    window.open(`https://wa.me/${turnoActual.telefono}`, "_blank");
-  }
+  if(turnoActual.telefono) window.open(`https://wa.me/${turnoActual.telefono}`, "_blank");
 });
 
-// 🔄 Cambiar estado
+// Cambiar estado
 document.querySelectorAll(".estadoBtn").forEach(btn => {
   btn.addEventListener("click", async () => {
-    if (turnoActual) {
+    if(turnoActual.id){
       await updateDoc(doc(db, "Turnos", turnoActual.id), { estado: btn.dataset.estado });
-      cerrarModal();
+      modal.style.display="none";
       cargarTurnos();
     }
   });
 });
 
-// 📨 Enviar confirmación (simulado)
+// Enviar confirmación (simulado)
 document.getElementById("confirmacionBtn").addEventListener("click", () => {
   alert("📩 Confirmación enviada al cliente (demo).");
-  cerrarModal();
+  modal.style.display="none";
 });
 
 cargarTurnos();
