@@ -7,17 +7,14 @@ const fechaInput = document.getElementById("fecha");
 const horaSelect = document.getElementById("hora");
 const horaLabel = document.getElementById("horaLabel");
 
-// Inicializar label y select ocultos
 horaLabel.style.opacity = "0";
 horaLabel.style.transform = "translateY(-20px)";
 horaSelect.style.opacity = "0";
 horaSelect.style.transform = "translateY(-20px)";
 horaSelect.style.display = "none";
 
-// Función para generar turnos disponibles
 function generarTurnosDisponibles(turnosOcupados = []) {
   horaSelect.innerHTML = "";
-
   for (let h = 10; h < 20; h++) {
     for (let m = 0; m < 60; m += 15) {
       const hora = h.toString().padStart(2, "0");
@@ -26,17 +23,14 @@ function generarTurnosDisponibles(turnosOcupados = []) {
       const option = document.createElement("option");
       option.value = valor;
       option.text = valor;
-
       if (turnosOcupados.includes(valor)) {
         option.disabled = true;
         option.text += " (ocupado)";
       }
-
       horaSelect.appendChild(option);
     }
   }
 
-  // Mostrar label y select con animación
   horaLabel.style.display = "block";
   horaSelect.style.display = "block";
   setTimeout(() => {
@@ -47,16 +41,13 @@ function generarTurnosDisponibles(turnosOcupados = []) {
   }, 50);
 }
 
-// Escuchar cambio de fecha
 fechaInput.addEventListener("change", async () => {
   const fechaSeleccionada = fechaInput.value;
   if (!fechaSeleccionada) return;
 
-  // Fijar año al actual y guardar solo dd-mm
   const [year, month, day] = fechaSeleccionada.split("-");
   const fechaDDMM = `${day}-${month}`;
 
-  // Consultar turnos de esa fecha (dd-mm) en Firestore
   const q = query(collection(db, "Turnos"), where("fecha", "==", fechaDDMM));
   const snapshot = await getDocs(q);
   const turnosOcupados = snapshot.docs.map(doc => doc.data().hora);
@@ -64,7 +55,6 @@ fechaInput.addEventListener("change", async () => {
   generarTurnosDisponibles(turnosOcupados);
 });
 
-// Escuchar submit del formulario
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const nombre = document.getElementById("nombre").value;
@@ -77,14 +67,13 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  // Guardar solo día y mes
   const [year, month, day] = fechaCompleta.split("-");
   const fecha = `${day}-${month}`;
 
   try {
     await addDoc(collection(db, "Turnos"), {
       nombre,
-      fecha,   // dd-mm
+      fecha,
       hora,
       telefono,
       estado: "Pendiente",
