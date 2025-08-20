@@ -27,9 +27,9 @@ button.acciones:hover { background:#218838; }
 #whatsappBtn { background:#25D366; color:#fff; }
 #confirmacionBtn { background:#d4af37; color:#111; }
 #cerrarModal { background:#444; color:#fff; }
-
-#hora, #horaLabel { transition: all 0.5s ease; }
-
 .estadoBtn[data-estado="Pendiente"] { background:#888; color:#fff; margin:5px; padding:8px; border-radius:6px; }
 .estadoBtn[data-estado="Aceptado"] { background:#28a745; color:#fff; margin:5px; padding:8px; border-radius:6px; }
 .estadoBtn[data-estado="Cancelado"] { background:#dc3545; color:#fff; margin:5px; padding:8px; border-radius:6px; }
+
+/* Animación label y select */
+#horaLabel, #hora { opacity:0; transform:translateY(-20px); transition:all 0.5s ease; }
