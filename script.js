@@ -32,13 +32,26 @@ fechaInput.addEventListener("change", async () => {
   const fechaSeleccionada = fechaInput.value;
   if (!fechaSeleccionada) return;
 
-  // Consultar turnos de esa fecha en Firestore
+  // Consultar turnos ocupados
   const q = query(collection(db, "Turnos"), where("fecha", "==", fechaSeleccionada));
   const snapshot = await getDocs(q);
   const turnosOcupados = snapshot.docs.map(doc => doc.data().hora);
 
   generarTurnosDisponibles(turnosOcupados);
+
+  // Mostrar con animación
+  const horaLabel = document.getElementById("horaLabel");
+  horaLabel.style.display = "block";
+  horaLabel.style.opacity = "1";
+  horaLabel.style.transform = "translateY(0)";
+
+  horaSelect.style.display = "block";
+  setTimeout(() => {  // Pequeño delay para animación suave
+    horaSelect.style.opacity = "1";
+    horaSelect.style.transform = "translateY(0)";
+  }, 50);
 });
+
 
 // Guardar reserva
 form.addEventListener("submit", async (e) => {
