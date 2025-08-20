@@ -4,6 +4,25 @@ import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/fi
 const form = document.getElementById("reservaForm");
 const mensaje = document.getElementById("mensaje");
 
+// Generar horarios cada 15 minutos entre 10:00 y 20:00
+function generarTurnos() {
+  const select = document.getElementById("hora");
+  select.innerHTML = "";
+
+  for (let h = 10; h < 20; h++) {
+    for (let m = 0; m < 60; m += 15) {
+      let hora = h.toString().padStart(2, "0");
+      let minuto = m.toString().padStart(2, "0");
+      const option = document.createElement("option");
+      option.value = `${hora}:${minuto}`;
+      option.text = `${hora}:${minuto}`;
+      select.appendChild(option);
+    }
+  }
+}
+
+generarTurnos();
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
