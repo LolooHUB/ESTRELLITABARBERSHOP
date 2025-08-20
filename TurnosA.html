@@ -11,7 +11,8 @@
     <thead>
       <tr>
         <th>Nombre</th>
-        <th>Fecha y hora</th>
+        <th>Fecha</th>
+        <th>Hora</th>
         <th>Teléfono</th>
         <th>Estado</th>
         <th>Acción</th>
@@ -19,6 +20,23 @@
     </thead>
     <tbody id="listaTurnos"></tbody>
   </table>
+
+  <!-- Modal de acciones -->
+  <div id="modal">
+    <div id="modalContent">
+      <h2>Acciones del turno</h2>
+      <button id="whatsappBtn">📞 Contactar WhatsApp</button>
+      <div>
+        <p>Cambiar estado:</p>
+        <button class="estadoBtn" data-estado="Pendiente">Pendiente</button>
+        <button class="estadoBtn" data-estado="Aceptado">Aceptado</button>
+        <button class="estadoBtn" data-estado="Cancelado">Cancelado</button>
+      </div>
+      <button id="confirmacionBtn">📨 Enviar confirmación</button>
+      <br><br>
+      <button id="cerrarModal">Cerrar</button>
+    </div>
+  </div>
 
   <script type="module" src="firebase.js"></script>
   <script type="module" src="admin.js"></script>
