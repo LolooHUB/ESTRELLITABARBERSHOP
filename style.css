@@ -169,3 +169,17 @@ a:hover {
   section h2 { font-size: 1.5rem; }
   .admin table, .admin th, .admin td { font-size: 0.9rem; }
 }
+
+.soporteBtn {
+  font-size: 0.8rem;
+  color: #d4af37;
+  text-decoration: none;
+  border: 1px solid #d4af37;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.soporteBtn:hover {
+  background-color: #d4af37;
+  color: #000;
+}
