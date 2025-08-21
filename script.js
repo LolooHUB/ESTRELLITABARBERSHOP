@@ -9,10 +9,7 @@ const horaLabel = document.getElementById("horaLabel");
 const reserva = document.querySelector('.reserva');
 
 // Inicial: ocultar hora
-horaLabel.style.opacity = "0";
-horaLabel.style.transform = "translateY(-20px)";
-horaSelect.style.opacity = "0";
-horaSelect.style.transform = "translateY(-20px)";
+reserva.classList.remove('showHora');
 
 // Generar turnos disponibles
 function generarTurnosDisponibles(turnosOcupados = []) {
@@ -32,14 +29,17 @@ function generarTurnosDisponibles(turnosOcupados = []) {
       horaSelect.appendChild(option);
     }
   }
-  // Mostrar suavemente
+  // Mostrar con animación
   reserva.classList.add('showHora');
 }
 
-// Cargar turnos ocupados según la fecha
+// Cuando cambia la fecha
 fechaInput.addEventListener("change", async () => {
   const fechaSeleccionada = fechaInput.value;
-  if (!fechaSeleccionada) return;
+  if (!fechaSeleccionada) {
+    reserva.classList.remove('showHora');
+    return;
+  }
 
   const [year, month, day] = fechaSeleccionada.split("-");
   const fechaDDMM = `${day}-${month}`;
@@ -85,7 +85,7 @@ form.addEventListener("submit", async (e) => {
     // Botón de agregar al calendario
     document.getElementById("agregarCalendario").addEventListener("click", () => {
       const start = new Date(`${fechaCompleta}T${hora}:00`);
-      const end = new Date(start.getTime() + 30*60000); // turno 30 min
+      const end = new Date(start.getTime() + 30*60000);
       const icsContent = `
 BEGIN:VCALENDAR
 VERSION:2.0
@@ -111,7 +111,7 @@ END:VCALENDAR
   }
 });
 
-// Formatear fecha para archivo ICS
+// Formatear fecha para ICS
 function formatDateICS(date) {
   return date.toISOString().replace(/[-:]/g,'').split('.')[0];
 }
