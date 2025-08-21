@@ -5,11 +5,6 @@ const form = document.getElementById("reservaForm");
 const mensaje = document.getElementById("mensaje");
 const fechaInput = document.getElementById("fecha");
 const horaSelect = document.getElementById("hora");
-const horaLabel = document.getElementById("horaLabel");
-const reserva = document.querySelector('.reserva');
-
-// Inicial: ocultar hora
-reserva.classList.remove('showHora');
 
 // Generar turnos disponibles
 function generarTurnosDisponibles(turnosOcupados = []) {
@@ -29,17 +24,12 @@ function generarTurnosDisponibles(turnosOcupados = []) {
       horaSelect.appendChild(option);
     }
   }
-  // Mostrar con animación
-  reserva.classList.add('showHora');
 }
 
 // Cuando cambia la fecha
 fechaInput.addEventListener("change", async () => {
   const fechaSeleccionada = fechaInput.value;
-  if (!fechaSeleccionada) {
-    reserva.classList.remove('showHora');
-    return;
-  }
+  if (!fechaSeleccionada) return;
 
   const [year, month, day] = fechaSeleccionada.split("-");
   const fechaDDMM = `${day}-${month}`;
@@ -78,9 +68,7 @@ form.addEventListener("submit", async (e) => {
     });
 
     mensaje.innerHTML = "✅ Turno reservado con éxito! <br> <button id='agregarCalendario'>Agregar al calendario</button>";
-
     form.reset();
-    reserva.classList.remove('showHora');
 
     // Botón de agregar al calendario
     document.getElementById("agregarCalendario").addEventListener("click", () => {
