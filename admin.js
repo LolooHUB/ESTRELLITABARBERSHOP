@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const listaTurnos = document.getElementById("listaTurnos");
 const modal = document.getElementById("modal");
@@ -21,16 +21,20 @@ async function cargarTurnos() {
       <td>${datos.hora}</td>
       <td>${datos.telefono}</td>
       <td>${datos.estado}</td>
-      <td><button class="acciones" 
-            data-id="${docSnap.id}" 
-            data-nombre="${datos.nombre}" 
-            data-fecha="${datos.fecha}" 
-            data-hora="${datos.hora}" 
-            data-telefono="${datos.telefono}">Acciones</button></td>
+      <td>
+        <button class="acciones" 
+                data-id="${docSnap.id}" 
+                data-nombre="${datos.nombre}" 
+                data-fecha="${datos.fecha}" 
+                data-hora="${datos.hora}" 
+                data-telefono="${datos.telefono}">Acciones</button>
+        <button class="eliminarBtn" data-id="${docSnap.id}">Eliminar</button>
+      </td>
     `;
     listaTurnos.appendChild(tr);
   });
 
+  // Botón Acciones
   document.querySelectorAll(".acciones").forEach(btn => {
     btn.addEventListener("click", () => {
       turnoActual = {
@@ -42,6 +46,19 @@ async function cargarTurnos() {
         docRef: doc(db, "Turnos", btn.dataset.id)
       };
       modal.style.display = "flex";
+    });
+  });
+
+  // Botón Eliminar
+  document.querySelectorAll(".eliminarBtn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const confirmar = confirm("⚠️ ¿Estás seguro que querés eliminar este turno?");
+      if (!confirmar) return;
+
+      const docRef = doc(db, "Turnos", btn.dataset.id);
+      await deleteDoc(docRef);
+      alert("🗑️ Turno eliminado!");
+      cargarTurnos();
     });
   });
 }
