@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="LOGO.png" type="image/png">
-<title>Turnos - Estrellita Barbershop</title>
-<link rel="stylesheet" href="style.css">
-  <div class="admin-header">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Turnos - Estrellita Barbershop</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logo.jpg" type="image/jpeg">
+</head>
+<body>
+
+<div class="admin-header">
   <img src="logo.jpg" alt="Estrellita Barbershop" class="logo-admin">
   <h1>Panel de Administración - Turnos</h1>
 </div>
-</head>
-<body>
+
 <div class="admin-container">
-  <h1>Panel de Turnos</h1>
+  <h2>Turnos registrados</h2>
   <table id="tablaTurnos">
     <thead>
       <tr>
@@ -25,12 +27,11 @@
       </tr>
     </thead>
     <tbody>
-      <!-- Turnos se llenan desde JS -->
+      <!-- Los turnos se cargan aquí desde Firebase -->
     </tbody>
   </table>
 </div>
 
-<script type="module" src="firebase.js"></script>
-<script type="module" src="admin.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
