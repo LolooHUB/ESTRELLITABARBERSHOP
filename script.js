@@ -6,12 +6,13 @@ const mensaje = document.getElementById("mensaje");
 const fechaInput = document.getElementById("fecha");
 const horaSelect = document.getElementById("hora");
 const horaLabel = document.getElementById("horaLabel");
+const reserva = document.querySelector('.reserva');
 
+// Inicial: ocultar hora
 horaLabel.style.opacity = "0";
 horaLabel.style.transform = "translateY(-20px)";
 horaSelect.style.opacity = "0";
 horaSelect.style.transform = "translateY(-20px)";
-horaSelect.style.display = "none";
 
 // Generar turnos disponibles cada 15 min
 function generarTurnosDisponibles(turnosOcupados = []) {
@@ -32,14 +33,8 @@ function generarTurnosDisponibles(turnosOcupados = []) {
     }
   }
 
-  horaLabel.style.display = "block";
-  horaSelect.style.display = "block";
-  setTimeout(() => {
-    horaLabel.style.opacity = "1";
-    horaLabel.style.transform = "translateY(0)";
-    horaSelect.style.opacity = "1";
-    horaSelect.style.transform = "translateY(0)";
-  }, 50);
+  // Mostrar suavemente con slide
+  reserva.classList.add('showHora');
 }
 
 // Cargar turnos ocupados según la fecha
@@ -86,11 +81,7 @@ form.addEventListener("submit", async (e) => {
     mensaje.innerHTML = "✅ Turno reservado con éxito! <br> <button id='agregarCalendario'>Agregar al calendario</button>";
 
     form.reset();
-    horaSelect.style.display = "none";
-    horaLabel.style.opacity = "0";
-    horaLabel.style.transform = "translateY(-20px)";
-    horaSelect.style.opacity = "0";
-    horaSelect.style.transform = "translateY(-20px)";
+    reserva.classList.remove('showHora');
 
     // Botón de agregar al calendario
     document.getElementById("agregarCalendario").addEventListener("click", () => {
