@@ -1,19 +1,22 @@
-/* Reset básico */
+/* ------------------- FUENTES ------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+/* ------------------- RESET ------------------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
-/* Body y fondo */
+/* ------------------- BODY ------------------- */
 body {
+  line-height: 1.7;
   background-color: #111;
   color: #f5f5f5;
-  line-height: 1.6;
 }
 
-/* Header */
+/* ------------------- HEADER ------------------- */
 header {
   background: #000;
   text-align: center;
@@ -23,16 +26,16 @@ header {
 
 header h1 {
   color: #d4af37;
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-bottom: 0.5rem;
 }
 
 header p {
   color: #f5f5f5;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
-/* Secciones */
+/* ------------------- SECCIONES ------------------- */
 section {
   padding: 2rem 1rem;
   max-width: 900px;
@@ -48,59 +51,63 @@ section h2 {
   padding-bottom: 0.3rem;
 }
 
-/* Formulario */
+/* ------------------- FORMULARIO RESERVAS ------------------- */
 .reserva form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  background-color: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(212,175,55,0.5);
 }
 
 .reserva label {
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 0.3rem;
-}
-
-.reserva input,
-.reserva select,
-.reserva button {
-  padding: 0.7rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
 }
 
 .reserva input,
 .reserva select {
   width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 .reserva button {
   background-color: #d4af37;
-  color: #000;
-  font-weight: bold;
+  color: #111;
+  font-weight: 700;
+  padding: 0.8rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s;
 }
 
 .reserva button:hover {
   background-color: #b08c2e;
+  transform: scale(1.05);
 }
 
-/* Mensaje de confirmación */
 #mensaje {
   margin-top: 1rem;
   font-weight: bold;
+  font-size: 1.1rem;
+  color: #d4af37;
 }
 
-/* Footer */
+/* ------------------- FOOTER ------------------- */
 footer {
   text-align: center;
   padding: 1.5rem;
   background: #000;
   border-top: 3px solid #d4af37;
+  margin-top: 2rem;
 }
 
-/* Links */
+/* ------------------- LINKS ------------------- */
 a {
   color: #d4af37;
   text-decoration: none;
@@ -110,14 +117,114 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Responsive */
+/* ------------------- ADMIN PANEL ------------------- */
+.admin-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.admin-container h1,
+.admin-container h2 {
+  color: #d4af37;
+  margin-bottom: 1rem;
+}
+
+.admin-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.admin-container th,
+.admin-container td {
+  border: 1px solid #555;
+  padding: 0.8rem;
+  text-align: left;
+}
+
+.admin-container th {
+  background-color: #000;
+  color: #d4af37;
+}
+
+.admin-container tr:nth-child(even) {
+  background-color: #222;
+}
+
+.admin-container tr:hover {
+  background-color: #333;
+}
+
+.admin-container button {
+  background-color: #d4af37;
+  border: none;
+  color: #111;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.admin-container button:hover {
+  background-color: #b08c2e;
+  transform: scale(1.05);
+}
+
+.admin-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-container input,
+.admin-container select {
+  padding: 0.7rem;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background-color: #111;
+  color: #f5f5f5;
+}
+
+/* ------------------- SELECTOR DE HORA ANIMADO ------------------- */
+#horaLabel,
+#hora {
+  transition: all 0.3s ease;
+}
+
+/* ------------------- RESPONSIVE ------------------- */
 @media (max-width: 600px) {
   header h1 {
     font-size: 2rem;
   }
 
+  header p {
+    font-size: 1rem;
+  }
+
   section h2 {
     font-size: 1.5rem;
   }
-}
 
+  .reserva form {
+    padding: 1rem;
+  }
+
+  .admin-container {
+    padding: 1rem;
+  }
+
+  th, td {
+    font-size: 0.9rem;
+  }
+
+  .admin-container button {
+    padding: 0.4rem 0.8rem;
+  }
+}
