@@ -6,30 +6,30 @@ const mensaje = document.getElementById("mensaje");
 const fechaInput = document.getElementById("fecha");
 const horaSelect = document.getElementById("hora");
 
-// Generar turnos de 10:00 a 19:45 cada 15 min
-function generarTurnosDisponibles(turnosOcupados = []) {
-  horaSelect.innerHTML = ""; // limpiar
+// Generar todos los turnos
+function generarTurnos(turnosOcupados = []) {
+  horaSelect.innerHTML = "";
   for (let h = 10; h < 20; h++) {
     for (let m = 0; m < 60; m += 15) {
-      const hora = h.toString().padStart(2,"0");
-      const minuto = m.toString().padStart(2,"0");
+      const hora = h.toString().padStart(2, "0");
+      const minuto = m.toString().padStart(2, "0");
       const valor = `${hora}:${minuto}`;
 
       const option = document.createElement("option");
       option.value = valor;
       option.textContent = valor;
 
-      // Bloquear solo si realmente está en el array
       if (turnosOcupados.includes(valor)) {
         option.disabled = true;
         option.textContent += " (ocupado)";
       }
+
       horaSelect.appendChild(option);
     }
   }
 }
 
-// Cuando cambia la fecha
+// Cuando se selecciona fecha
 fechaInput.addEventListener("change", async () => {
   const fecha = fechaInput.value;
   if (!fecha) return;
@@ -40,22 +40,23 @@ fechaInput.addEventListener("change", async () => {
   try {
     const q = query(collection(db, "Turnos"), where("fecha", "==", fechaDDMM));
     const snapshot = await getDocs(q);
-    // Filtrar solo strings válidos y trim
-    const turnosOcupados = snapshot.docs.map(doc => {
-      const h = doc.data().hora;
-      return h ? h.toString().trim() : "";
-    }).filter(h => h.length > 0);
 
-    generarTurnosDisponibles(turnosOcupados);
-  } catch(err){
+    // Tomar solo horas válidas
+    const turnosOcupados = snapshot.docs
+      .map(doc => doc.data().hora)
+      .filter(h => h && h.length > 0);
+
+    generarTurnos(turnosOcupados);
+  } catch (err) {
     console.error("Error cargando turnos:", err);
+    // aunque falle, generamos todos los turnos
+    generarTurnos([]);
   }
 });
 
 // Enviar reserva
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const nombre = document.getElementById("nombre").value.trim();
   const fechaCompleta = fechaInput.value;
   const hora = horaSelect.value;
@@ -85,7 +86,7 @@ form.addEventListener("submit", async (e) => {
 
     document.getElementById("agregarCalendario").addEventListener("click", () => {
       const start = new Date(`${fechaCompleta}T${hora}:00`);
-      const end = new Date(start.getTime() + 30*60000);
+      const end = new Date(start.getTime() + 30 * 60000);
       const icsContent = `
 BEGIN:VCALENDAR
 VERSION:2.0
@@ -98,8 +99,8 @@ DESCRIPTION:Turno reservado en Estrellita Barbershop
 END:VEVENT
 END:VCALENDAR
       `;
-      const blob = new Blob([icsContent], { type: 'text/calendar' });
-      const link = document.createElement('a');
+      const blob = new Blob([icsContent], { type: "text/calendar" });
+      const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
       link.download = 'Turno_Estrellita.ics';
       link.click();
@@ -112,5 +113,5 @@ END:VCALENDAR
 });
 
 function formatDateICS(date) {
-  return date.toISOString().replace(/[-:]/g,'').split('.')[0];
+  return date.toISOString().replace(/[-:]/g, '').split('.')[0];
 }
