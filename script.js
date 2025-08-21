@@ -8,30 +8,30 @@ const horaSelect = document.getElementById("hora");
 
 // Generar turnos disponibles
 function generarTurnosDisponibles(turnosOcupados = []) {
-  horaSelect.innerHTML = "";
+  horaSelect.innerHTML = ""; // limpiar opciones
   for (let h = 10; h < 20; h++) {
     for (let m = 0; m < 60; m += 15) {
-      const hora = h.toString().padStart(2,"0");
-      const minuto = m.toString().padStart(2,"0");
+      const hora = h.toString().padStart(2, "0");
+      const minuto = m.toString().padStart(2, "0");
       const valor = `${hora}:${minuto}`;
       const option = document.createElement("option");
       option.value = valor;
-      option.text = valor;
-      if(turnosOcupados.includes(valor)){
+      option.textContent = valor;
+      if (turnosOcupados.includes(valor)) {
         option.disabled = true;
-        option.text += " (ocupado)";
+        option.textContent += " (ocupado)";
       }
       horaSelect.appendChild(option);
     }
   }
 }
 
-// Cuando cambia la fecha
+// Al cambiar la fecha, cargamos turnos ocupados
 fechaInput.addEventListener("change", async () => {
-  const fechaSeleccionada = fechaInput.value;
-  if (!fechaSeleccionada) return;
+  const fecha = fechaInput.value;
+  if (!fecha) return;
 
-  const [year, month, day] = fechaSeleccionada.split("-");
+  const [year, month, day] = fecha.split("-");
   const fechaDDMM = `${day}-${month}`;
 
   const q = query(collection(db, "Turnos"), where("fecha", "==", fechaDDMM));
@@ -44,13 +44,14 @@ fechaInput.addEventListener("change", async () => {
 // Enviar reserva
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const nombre = document.getElementById("nombre").value;
+
+  const nombre = document.getElementById("nombre").value.trim();
   const fechaCompleta = fechaInput.value;
   const hora = horaSelect.value;
-  const telefono = document.getElementById("telefono").value;
+  const telefono = document.getElementById("telefono").value.trim();
 
   if (!hora) {
-    mensaje.innerText = "❌ Seleccioná un horario disponible.";
+    mensaje.textContent = "❌ Seleccioná un horario disponible.";
     return;
   }
 
@@ -69,8 +70,8 @@ form.addEventListener("submit", async (e) => {
 
     mensaje.innerHTML = "✅ Turno reservado con éxito! <br> <button id='agregarCalendario'>Agregar al calendario</button>";
     form.reset();
+    horaSelect.innerHTML = ""; // limpiar horas
 
-    // Botón de agregar al calendario
     document.getElementById("agregarCalendario").addEventListener("click", () => {
       const start = new Date(`${fechaCompleta}T${hora}:00`);
       const end = new Date(start.getTime() + 30*60000);
@@ -86,20 +87,20 @@ DESCRIPTION:Turno reservado en Estrellita Barbershop
 END:VEVENT
 END:VCALENDAR
       `;
-      const blob = new Blob([icsContent], {type: 'text/calendar'});
+      const blob = new Blob([icsContent], { type: 'text/calendar' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = 'Turno_Estrellita.ics';
       link.click();
     });
 
-  } catch (error) {
-    console.error("Error al reservar:", error);
-    mensaje.innerText = "❌ Error al reservar turno.";
+  } catch (err) {
+    console.error("Error al reservar:", err);
+    mensaje.textContent = "❌ Error al reservar turno.";
   }
 });
 
-// Formatear fecha para ICS
 function formatDateICS(date) {
-  return date.toISOString().replace(/[-:]/g,'').split('.')[0];
+  return date.toISOString().replace(/[-:]/g, '').split('.')[0];
 }
+
