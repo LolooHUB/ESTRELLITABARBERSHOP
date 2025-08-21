@@ -1,63 +1,131 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Estrellita Barbershop</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Header -->
-  <header>
-    <h1>💈 Estrellita Barbershop</h1>
-    <p>Reserva tu turno online</p>
-  </header>
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
 
-  <!-- Información -->
-  <section class="info">
-    <h2>Información</h2>
-    <p>📍 Dirección: Dean Funes 583</p>
-    <p>⏰ Horarios: Lunes a Viernes 10:00 – 20:00 | Sábado 10:00 – 18:00 | Domingo cerrado</p>
-    <p>📸 Instagram: <a href="http://instagram.com/estrellitas_barber/" target="_blank">@estrellitas_barber</a></p>
-  </section>
+/* Body y fondo */
+body {
+  background-color: #111;
+  color: #f5f5f5;
+  line-height: 1.6;
+}
 
-  <!-- Servicios -->
-  <section class="servicios">
-    <h2>Servicios</h2>
-    <ul>
-      <li>Corte de cabello</li>
-      <li>Diseño de barba</li>
-      <li>Barbería tradicional</li>
-      <li>Peinados especiales</li>
-    </ul>
-  </section>
+/* Header */
+header {
+  background: #000;
+  text-align: center;
+  padding: 2rem 1rem;
+  border-bottom: 3px solid #d4af37;
+}
 
-  <!-- Formulario de reservas -->
-  <section class="reserva">
-    <h2>Reservar turno</h2>
-    <form id="reservaForm">
-      <label>Nombre completo:</label>
-      <input type="text" id="nombre" required>
+header h1 {
+  color: #d4af37;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
 
-      <label>Fecha:</label>
-      <input type="date" id="fecha" required>
+header p {
+  color: #f5f5f5;
+  font-size: 1.2rem;
+}
 
-      <label id="horaLabel">Hora del turno:</label>
-      <select id="hora" required></select>
+/* Secciones */
+section {
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: auto;
+}
 
-      <label>Teléfono / Celular:</label>
-      <input type="tel" id="telefono" required>
+section h2 {
+  color: #d4af37;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  border-bottom: 2px solid #d4af37;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+}
 
-      <button type="submit">Reservar turno</button>
-    </form>
-    <p id="mensaje"></p>
-  </section>
+.info p,
+.servicios ul li {
+  margin: 0.5rem 0;
+}
 
-  <!-- Footer -->
-  <footer>
-    <p>💈 Estrellita Barbershop &copy; 2025</p>
-  </footer>
+.servicios ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+}
 
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="script.js"></script>
-</body>
-</html>
+/* Formulario */
+.reserva form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reserva label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.reserva input,
+.reserva select,
+.reserva button {
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.reserva input,
+.reserva select {
+  width: 100%;
+}
+
+.reserva button {
+  background-color: #d4af37;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.reserva button:hover {
+  background-color: #b08c2e;
+}
+
+/* Mensaje de confirmación */
+#mensaje {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: #000;
+  border-top: 3px solid #d4af37;
+}
+
+/* Links */
+a {
+  color: #d4af37;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  section h2 {
+    font-size: 1.5rem;
+  }
+}
