@@ -8,10 +8,11 @@ const whatsappBtn = document.getElementById("whatsappBtn");
 const confirmacionBtn = document.getElementById("confirmacionBtn");
 let turnoActual = {};
 
-// Cargar turnos
+// Función para cargar todos los turnos
 async function cargarTurnos() {
   listaTurnos.innerHTML = "";
   const snapshot = await getDocs(collection(db, "Turnos"));
+
   snapshot.forEach(docSnap => {
     const datos = docSnap.data();
     const tr = document.createElement("tr");
@@ -34,8 +35,8 @@ async function cargarTurnos() {
     listaTurnos.appendChild(tr);
   });
 
-  // Botón Acciones
-  document.querySelectorAll(".acciones").forEach(btn => {
+  // Agregar listener a botones "Acciones"
+  listaTurnos.querySelectorAll(".acciones").forEach(btn => {
     btn.addEventListener("click", () => {
       turnoActual = {
         id: btn.dataset.id,
@@ -49,16 +50,21 @@ async function cargarTurnos() {
     });
   });
 
-  // Botón Eliminar
-  document.querySelectorAll(".eliminarBtn").forEach(btn => {
+  // Agregar listener a botones "Eliminar"
+  listaTurnos.querySelectorAll(".eliminarBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
       const confirmar = confirm("⚠️ ¿Estás seguro que querés eliminar este turno?");
       if (!confirmar) return;
 
       const docRef = doc(db, "Turnos", btn.dataset.id);
-      await deleteDoc(docRef);
-      alert("🗑️ Turno eliminado!");
-      cargarTurnos();
+      try {
+        await deleteDoc(docRef);
+        alert("🗑️ Turno eliminado!");
+        cargarTurnos(); // Recargar tabla
+      } catch (err) {
+        console.error("Error al eliminar:", err);
+        alert("❌ No se pudo eliminar el turno.");
+      }
     });
   });
 }
