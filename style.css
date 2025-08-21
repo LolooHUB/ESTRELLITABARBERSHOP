@@ -45,13 +45,6 @@ section h2 { color: #d4af37; margin-bottom: 1rem; font-size: 2rem; border-bottom
 }
 .reserva button:hover { background-color: #b08c2e; transform: scale(1.05); box-shadow: 0 0 10px #d4af37; }
 
-#horaLabel, #hora {
-  opacity: 0; transform: translateY(-20px); transition: all 0.3s ease;
-}
-
-.reserva.showHora #horaLabel,
-.reserva.showHora #hora { opacity: 1; transform: translateY(0); }
-
 #mensaje { margin-top: 1rem; font-weight: bold; font-size: 1.1rem; color: #d4af37; transition: all 0.3s; }
 
 footer { text-align: center; padding: 1.5rem; background: #000; border-top: 3px solid #d4af37; margin-top: 2rem; }
