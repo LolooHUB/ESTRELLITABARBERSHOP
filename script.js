@@ -6,17 +6,20 @@ const mensaje = document.getElementById("mensaje");
 const fechaInput = document.getElementById("fecha");
 const horaSelect = document.getElementById("hora");
 
-// Generar turnos disponibles
+// Generar turnos de 10:00 a 19:45 cada 15 min
 function generarTurnosDisponibles(turnosOcupados = []) {
-  horaSelect.innerHTML = ""; // limpiar opciones
+  horaSelect.innerHTML = ""; // limpiar
   for (let h = 10; h < 20; h++) {
     for (let m = 0; m < 60; m += 15) {
-      const hora = h.toString().padStart(2, "0");
-      const minuto = m.toString().padStart(2, "0");
+      const hora = h.toString().padStart(2,"0");
+      const minuto = m.toString().padStart(2,"0");
       const valor = `${hora}:${minuto}`;
+
       const option = document.createElement("option");
       option.value = valor;
       option.textContent = valor;
+
+      // Bloquear solo si realmente está en el array
       if (turnosOcupados.includes(valor)) {
         option.disabled = true;
         option.textContent += " (ocupado)";
@@ -26,7 +29,7 @@ function generarTurnosDisponibles(turnosOcupados = []) {
   }
 }
 
-// Al cambiar la fecha, cargamos turnos ocupados
+// Cuando cambia la fecha
 fechaInput.addEventListener("change", async () => {
   const fecha = fechaInput.value;
   if (!fecha) return;
@@ -34,11 +37,19 @@ fechaInput.addEventListener("change", async () => {
   const [year, month, day] = fecha.split("-");
   const fechaDDMM = `${day}-${month}`;
 
-  const q = query(collection(db, "Turnos"), where("fecha", "==", fechaDDMM));
-  const snapshot = await getDocs(q);
-  const turnosOcupados = snapshot.docs.map(doc => doc.data().hora);
+  try {
+    const q = query(collection(db, "Turnos"), where("fecha", "==", fechaDDMM));
+    const snapshot = await getDocs(q);
+    // Filtrar solo strings válidos y trim
+    const turnosOcupados = snapshot.docs.map(doc => {
+      const h = doc.data().hora;
+      return h ? h.toString().trim() : "";
+    }).filter(h => h.length > 0);
 
-  generarTurnosDisponibles(turnosOcupados);
+    generarTurnosDisponibles(turnosOcupados);
+  } catch(err){
+    console.error("Error cargando turnos:", err);
+  }
 });
 
 // Enviar reserva
@@ -70,7 +81,7 @@ form.addEventListener("submit", async (e) => {
 
     mensaje.innerHTML = "✅ Turno reservado con éxito! <br> <button id='agregarCalendario'>Agregar al calendario</button>";
     form.reset();
-    horaSelect.innerHTML = ""; // limpiar horas
+    horaSelect.innerHTML = "";
 
     document.getElementById("agregarCalendario").addEventListener("click", () => {
       const start = new Date(`${fechaCompleta}T${hora}:00`);
@@ -101,6 +112,5 @@ END:VCALENDAR
 });
 
 function formatDateICS(date) {
-  return date.toISOString().replace(/[-:]/g, '').split('.')[0];
+  return date.toISOString().replace(/[-:]/g,'').split('.')[0];
 }
-
