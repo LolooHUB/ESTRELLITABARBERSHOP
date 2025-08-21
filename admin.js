@@ -19,18 +19,17 @@ async function cargarTurnos() {
         <td>${data.hora}</td>
         <td>${data.estado}</td>
         <td>
-          <button class="btnEliminar">Eliminar</button>
+          <button class="btnWhatsApp">WhatsApp Cliente</button>
           <button class="btnPendiente">Pendiente</button>
           <button class="btnConfirmado">Confirmado</button>
+          <button class="btnEliminar">Eliminar</button>
         </td>
       `;
 
-      // Eliminar
-      tr.querySelector(".btnEliminar").addEventListener("click", async () => {
-        if (confirm(`Eliminar turno de ${data.nombre} el ${data.fecha} a las ${data.hora}?`)) {
-          await deleteDoc(doc(db, "Turnos", docSnap.id));
-          cargarTurnos(); // recargar tabla
-        }
+      // WhatsApp Cliente
+      tr.querySelector(".btnWhatsApp").addEventListener("click", () => {
+        const telCliente = data.telefono.replace(/\D/g,''); // solo números
+        window.open(`https://wa.me/+54${telCliente}`, "_blank");
       });
 
       // Cambiar a Pendiente
@@ -43,6 +42,14 @@ async function cargarTurnos() {
       tr.querySelector(".btnConfirmado").addEventListener("click", async () => {
         await updateDoc(doc(db, "Turnos", docSnap.id), { estado: "Confirmado" });
         cargarTurnos();
+      });
+
+      // Eliminar
+      tr.querySelector(".btnEliminar").addEventListener("click", async () => {
+        if (confirm(`Eliminar turno de ${data.nombre} el ${data.fecha} a las ${data.hora}?`)) {
+          await deleteDoc(doc(db, "Turnos", docSnap.id));
+          cargarTurnos();
+        }
       });
 
       tabla.appendChild(tr);
