@@ -13,6 +13,7 @@ horaSelect.style.opacity = "0";
 horaSelect.style.transform = "translateY(-20px)";
 horaSelect.style.display = "none";
 
+// Generar turnos disponibles cada 15 min
 function generarTurnosDisponibles(turnosOcupados = []) {
   horaSelect.innerHTML = "";
   for (let h = 10; h < 20; h++) {
@@ -41,6 +42,7 @@ function generarTurnosDisponibles(turnosOcupados = []) {
   }, 50);
 }
 
+// Cargar turnos ocupados según la fecha
 fechaInput.addEventListener("change", async () => {
   const fechaSeleccionada = fechaInput.value;
   if (!fechaSeleccionada) return;
@@ -55,6 +57,7 @@ fechaInput.addEventListener("change", async () => {
   generarTurnosDisponibles(turnosOcupados);
 });
 
+// Enviar reserva
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const nombre = document.getElementById("nombre").value;
@@ -79,16 +82,46 @@ form.addEventListener("submit", async (e) => {
       estado: "Pendiente",
       creado: new Date()
     });
-    mensaje.innerText = "✅ Turno reservado con éxito!";
+
+    mensaje.innerHTML = "✅ Turno reservado con éxito! <br> <button id='agregarCalendario'>Agregar al calendario</button>";
+
     form.reset();
     horaSelect.style.display = "none";
     horaLabel.style.opacity = "0";
     horaLabel.style.transform = "translateY(-20px)";
     horaSelect.style.opacity = "0";
     horaSelect.style.transform = "translateY(-20px)";
+
+    // Botón de agregar al calendario
+    document.getElementById("agregarCalendario").addEventListener("click", () => {
+      const start = new Date(`${fechaCompleta}T${hora}:00`);
+      const end = new Date(start.getTime() + 30*60000); // turno 30 min
+      const icsContent = `
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Turno Estrellita Barbershop
+DTSTART:${formatDateICS(start)}
+DTEND:${formatDateICS(end)}
+LOCATION:Dean Funes 583
+DESCRIPTION:Turno reservado en Estrellita Barbershop
+END:VEVENT
+END:VCALENDAR
+      `;
+      const blob = new Blob([icsContent], {type: 'text/calendar'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Turno_Estrellita.ics';
+      link.click();
+    });
+
   } catch (error) {
     console.error("Error al reservar:", error);
     mensaje.innerText = "❌ Error al reservar turno.";
   }
 });
 
+// Formatear fecha para archivo ICS
+function formatDateICS(date) {
+  return date.toISOString().replace(/[-:]/g,'').split('.')[0];
+}
