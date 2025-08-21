@@ -14,26 +14,25 @@ horaLabel.style.transform = "translateY(-20px)";
 horaSelect.style.opacity = "0";
 horaSelect.style.transform = "translateY(-20px)";
 
-// Generar turnos disponibles cada 15 min
+// Generar turnos disponibles
 function generarTurnosDisponibles(turnosOcupados = []) {
   horaSelect.innerHTML = "";
   for (let h = 10; h < 20; h++) {
     for (let m = 0; m < 60; m += 15) {
-      const hora = h.toString().padStart(2, "0");
-      const minuto = m.toString().padStart(2, "0");
+      const hora = h.toString().padStart(2,"0");
+      const minuto = m.toString().padStart(2,"0");
       const valor = `${hora}:${minuto}`;
       const option = document.createElement("option");
       option.value = valor;
       option.text = valor;
-      if (turnosOcupados.includes(valor)) {
+      if(turnosOcupados.includes(valor)){
         option.disabled = true;
         option.text += " (ocupado)";
       }
       horaSelect.appendChild(option);
     }
   }
-
-  // Mostrar suavemente con slide
+  // Mostrar suavemente
   reserva.classList.add('showHora');
 }
 
