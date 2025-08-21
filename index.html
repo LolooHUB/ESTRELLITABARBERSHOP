@@ -3,63 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="LOGO.png" type="image/png">
-  <img src="logo.jpg" alt="Estrellita Barbershop" class="logo">
   <title>Estrellita Barbershop</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logo.jpg" type="image/jpeg">
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <h1>💈 Estrellita Barbershop</h1>
-    <p>Reserva tu turno online</p>
-  </header>
 
-  <!-- Formulario de reservas -->
-  <section class="reserva">
-    <h2>Reservar turno</h2>
-    <form id="reservaForm">
-      <label>Nombre completo:</label>
-      <input type="text" id="nombre" required>
+<header>
+  <img src="logo.jpg" alt="Estrellita Barbershop" class="logo">
+  <h1>Estrellita Barbershop</h1>
+  <p>¡Tu mejor corte en Buenos Aires!</p>
+</header>
 
-      <label>Fecha:</label>
-      <input type="date" id="fecha" required>
+<section class="reserva">
+  <h2>Reserva tu turno</h2>
+  <form id="formReserva">
+    <label for="nombre">Nombre completo:</label>
+    <input type="text" id="nombre" required>
 
-      <label id="horaLabel" style="display:none;">Hora del turno:</label>
-      <select id="hora" required style="display:none;"></select>
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" required>
 
-      <label>Teléfono / Celular:</label>
-      <input type="tel" id="telefono" required>
+    <label for="hora" id="horaLabel">Hora del turno:</label>
+    <select id="hora" required></select>
 
-      <button type="submit">Reservar turno</button>
-    </form>
-    <p id="mensaje"></p>
-  </section>
+    <label for="telefono">Teléfono / Celular:</label>
+    <input type="text" id="telefono" required>
 
-  <!-- Información -->
-  <section class="info">
-    <h2>Información</h2>
-    <p>📍 Dirección: Dean Funes 583</p>
-    <p>⏰ Horarios: Lunes a Viernes 10:00 – 20:00 | Sábado 10:00 – 18:00 | Domingo cerrado</p>
-    <p>📸 Instagram: <a href="http://instagram.com/estrellitas_barber/" target="_blank">@estrellitas_barber</a></p>
-  </section>
+    <button type="submit">Reservar turno</button>
+  </form>
+  <div id="mensaje"></div>
+</section>
 
-  <!-- Servicios -->
-  <section class="servicios">
-    <h2>Servicios</h2>
-    <ul>
-      <li>Corte de cabello</li>
-      <li>Barbería tradicional</li>
-      <li>Peinados especiales</li>
-    </ul>
-  </section>
+<section class="info">
+  <h2>Información</h2>
+  <p>Dirección: Dean Funes 583</p>
+  <p>Instagram: <a href="http://instagram.com/estrellitas_barber/" target="_blank">estrellitas_barber</a></p>
+  <p>WhatsApp: <a href="https://wa.me/+5491122982685" target="_blank">+54 9 11 2298-2685</a></p>
+  <p>Horario: 10:00 - 20:00</p>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <p>💈 Estrellita Barbershop &copy; 2025</p>
-  </footer>
+<footer>
+  <p>© 2025 Estrellita Barbershop</p>
+</footer>
 
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
