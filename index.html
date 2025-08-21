@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estrellita Barbershop</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="logo.png" type="image/png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estrellita Barbershop</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <header>
-  <img src="logo.png" alt="Estrellita Barbershop" class="logo">
+  <img src="logo.jpg" alt="Estrellita Barbershop" class="logo">
   <h1>Estrellita Barbershop</h1>
-  <p>¡Tu mejor corte en Buenos Aires!</p>
 </header>
 
 <section class="reserva">
-  <h2>Reserva tu turno</h2>
-  <form id="formReserva">
+  <h2>Reservar turno</h2>
+  <form id="reservaForm">
     <label for="nombre">Nombre completo:</label>
     <input type="text" id="nombre" required>
-
-    <label for="fecha">Fecha:</label>
-    <input type="date" id="fecha" required>
-    
-    <label for="hora">Hora del turno:</label>
-    <select id="hora" required></select>
 
     <label for="telefono">Teléfono / Celular:</label>
     <input type="text" id="telefono" required>
 
-    <button type="submit">Reservar turno</button>
+    <label for="fecha">Seleccioná la fecha:</label>
+    <input type="date" id="fecha" required>
+
+    <label for="hora">Hora del turno:</label>
+    <select id="hora" required></select>
+
+    <button type="submit">Reservar</button>
   </form>
   <div id="mensaje"></div>
 </section>
@@ -39,13 +36,14 @@
   <h2>Información</h2>
   <p>Dirección: Dean Funes 583</p>
   <p>Instagram: <a href="http://instagram.com/estrellitas_barber/" target="_blank">estrellitas_barber</a></p>
-  <p>Horario: 10:00 - 20:00</p>
+  <p>Teléfono: <a href="https://wa.me/+5491122982685" target="_blank">+54 9 11 2298-2685</a></p>
+  <p>Horario: 10:00 a 20:00</p>
 </section>
 
 <footer>
-  <p>© 2025 Estrellita Barbershop</p>
+  Estrellita Barbershop © 2025
 </footer>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
